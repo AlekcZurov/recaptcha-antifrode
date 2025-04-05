@@ -1,0 +1,47 @@
+// RU - 1 Тег, вешается на все события, которые нужно отслеживать. Название события нужно указать вместо submit, например click_email. Оно и будет отправляться на проверку в reCAPTCHA вместе с уникальным токеном клиента
+// EN - 1 Tag, hangs on all events to be tracked. The name of the event should be specified instead of submit, for example click_email. It will be sent to reCAPTCHA along with the client's unique token for verification
+
+<script>
+window.dataLayer.push({
+    'event': 'iNeedScore',
+    'recaptchaAction': 'submit' // или 'click', 'login' и т. д.
+});
+</script>
+
+
+//RU — 2 тег, Генерация токена и отправка на сервер (срабатывает по событию первого Тега)
+//EN — 2 Tag, Token generation and sending to the server (triggered by the event of the first Tag)
+
+<script>
+    grecaptcha.ready(function() {
+        grecaptcha.execute('your-site-key', {action: '{{recaptchaAction}}'})
+        .then(function(token) {
+            fetch('/verify-recaptcha.php', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({recaptchaToken: token})
+            })
+            .then(response => response.json())
+            .then(data => {
+                window.dataLayer.push({
+                    'event': 'recaptchaVerified',
+                    'recaptchaValid': data.success,
+                    'recaptchaScore': data.score,
+                    'recaptchaAction': '{{recaptchaAction}}'
+                });
+            });
+        });
+    });
+    </script>
+
+//RU - Обязательный скрипт reCAPTCHA к которому обращаются наши теги 1 и 2 (если хотите сделать её скрытой, расскомментируйте стили, но тогда нужно добавить на сайте ссылки на политику Google reCAPTCHA, например, добавив эти ссылки в политику конфиденциальности: <a href="https://policies.google.com/privacy">Политика конфиденциальности</a> и <a href="https://policies.google.com/terms">Условия использования</a> reCAPTCHA.
+//EN - Mandatory reCAPTCHA script to which our tags 1 and 2 are addressed (if you want to make it hidden, uncomment the styles, but then you need to add links to Google's reCAPTCHA policy on the site, for example, by adding these links to the privacy policy: <a href=“https://policies.google.com/privacy”>Privacy Policy</a> and <a href=“https://policies.google.com/terms”>Terms of service</a> reCAPTCHA.
+
+<script src='https://www.google.com/recaptcha/api.js?render={{recaptchaSiteKey}}'></script>
+<!--
+<style>
+  .grecaptcha-badge {
+    visibility: hidden;
+  }
+</style>
+-->

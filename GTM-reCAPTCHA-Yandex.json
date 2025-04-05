@@ -1,0 +1,346 @@
+{
+    "exportFormatVersion": 2,
+    "exportTime": "2025-04-01 21:01:30",
+    "containerVersion": {
+        "path": "accounts/6269093290/containers/206306412/versions/4",
+        "accountId": "6269093290",
+        "containerId": "206306412",
+        "containerVersionId": "4",
+        "name": "Добавлена первичная проверка на ботов",
+        "container": {
+            "path": "accounts/6269093290/containers/206306412",
+            "accountId": "6269093290",
+            "containerId": "206306412",
+            "name": "3ln.ru",
+            "publicId": "GTM-MRTJQZ25",
+            "usageContext": [
+                "WEB"
+            ],
+            "fingerprint": "1739544878531",
+            "tagManagerUrl": "https://tagmanager.google.com/#/container/accounts/6269093290/containers/206306412/workspaces?apiLink=container",
+            "features": {
+                "supportUserPermissions": true,
+                "supportEnvironments": true,
+                "supportWorkspaces": true,
+                "supportGtagConfigs": false,
+                "supportBuiltInVariables": true,
+                "supportClients": false,
+                "supportFolders": true,
+                "supportTags": true,
+                "supportTemplates": true,
+                "supportTriggers": true,
+                "supportVariables": true,
+                "supportVersions": true,
+                "supportZones": true,
+                "supportTransformations": false
+            },
+            "tagIds": [
+                "GTM-MRTJQZ25"
+            ]
+        },
+        "tag": [
+            {
+                "accountId": "6269093290",
+                "containerId": "206306412",
+                "tagId": "49",
+                "name": "YM hit reCAPTCHA score",
+                "type": "html",
+                "parameter": [
+                    {
+                        "type": "TEMPLATE",
+                        "key": "html",
+                        "value": "<script>\n  ym('{{YM-number}}', 'hit', '/reCAPTCHA', { params: { reCAPTCHA_score: '{{recaptchaScore}}' } });\n\n  var score10 = {{recaptchaScore}} * 10;\n  ym('{{YM-number}}', 'reachGoal', 'botscore' + score10, {order_price: '{{recaptchaScore}}', currency: 'RUB'});\n</script>\n"
+                    },
+                    {
+                        "type": "BOOLEAN",
+                        "key": "supportDocumentWrite",
+                        "value": "false"
+                    }
+                ],
+                "fingerprint": "1743499328129",
+                "firingTriggerId": [
+                    "45"
+                ],
+                "tagFiringOption": "ONCE_PER_EVENT",
+                "monitoringMetadata": {
+                    "type": "MAP"
+                },
+                "consentSettings": {
+                    "consentStatus": "NOT_SET"
+                }
+            },
+            {
+                "accountId": "6269093290",
+                "containerId": "206306412",
+                "tagId": "51",
+                "name": "DLpush iNeedScore",
+                "type": "html",
+                "parameter": [
+                    {
+                        "type": "TEMPLATE",
+                        "key": "html",
+                        "value": "<script>\nwindow.dataLayer.push({\n    'event': 'iNeedScore',\n    'recaptchaAction': 'target_event'\n});\n</script>"
+                    },
+                    {
+                        "type": "BOOLEAN",
+                        "key": "supportDocumentWrite",
+                        "value": "false"
+                    }
+                ],
+                "fingerprint": "1743498470641",
+                "firingTriggerId": [
+                    "50"
+                ],
+                "tagFiringOption": "ONCE_PER_EVENT",
+                "monitoringMetadata": {
+                    "type": "MAP"
+                },
+                "consentSettings": {
+                    "consentStatus": "NOT_SET"
+                }
+            },
+            {
+                "accountId": "6269093290",
+                "containerId": "206306412",
+                "tagId": "54",
+                "name": "reCAPTCHA - set in server",
+                "type": "html",
+                "parameter": [
+                    {
+                        "type": "TEMPLATE",
+                        "key": "html",
+                        "value": "<script>\n    var action = '{{recaptchaAction}}';\n\n    grecaptcha.ready(function() {\n        grecaptcha.execute('{{recaptchaSiteKey}}', { action: action })\n        .then(function(token) {\n            var xhr = new XMLHttpRequest();\n            xhr.open('POST', '/{{recaptchaServerPuth}}', true);\n            xhr.setRequestHeader('Content-Type', 'application/json');\n\n            xhr.onreadystatechange = function() {\n                if (xhr.readyState === 4 && xhr.status === 200) {\n                    try {\n                        var data = JSON.parse(xhr.responseText);\n                        window.dataLayer.push({\n                            'event': 'recaptchaVerified',\n                            'recaptchaValid': data.success,\n                            'recaptchaScore': data.score,\n                            'recaptchaAction': action\n                        });\n                    } catch (e) {\n                        console.error('Ошибка парсинга JSON:', e);\n                    }\n                }\n            };\n\n            xhr.send(JSON.stringify({ recaptchaToken: token }));\n        });\n    });\n</script>\n"
+                    },
+                    {
+                        "type": "BOOLEAN",
+                        "key": "supportDocumentWrite",
+                        "value": "false"
+                    }
+                ],
+                "fingerprint": "1743538905683",
+                "firingTriggerId": [
+                    "53"
+                ],
+                "tagFiringOption": "ONCE_PER_EVENT",
+                "monitoringMetadata": {
+                    "type": "MAP"
+                },
+                "consentSettings": {
+                    "consentStatus": "NOT_SET"
+                }
+            },
+            {
+                "accountId": "6269093290",
+                "containerId": "206306412",
+                "tagId": "55",
+                "name": "reCAPTCHA - badge",
+                "type": "html",
+                "parameter": [
+                    {
+                        "type": "TEMPLATE",
+                        "key": "html",
+                        "value": "<script src='https://www.google.com/recaptcha/api.js?render={{recaptchaSiteKey}}'></script>\n<!--\n<style>\n  .grecaptcha-badge {\n    visibility: hidden;\n  }\n</style>\n-->"
+                    },
+                    {
+                        "type": "BOOLEAN",
+                        "key": "supportDocumentWrite",
+                        "value": "false"
+                    }
+                ],
+                "fingerprint": "1743526217606",
+                "firingTriggerId": [
+                    "2147479553"
+                ],
+                "tagFiringOption": "ONCE_PER_EVENT",
+                "monitoringMetadata": {
+                    "type": "MAP"
+                },
+                "consentSettings": {
+                    "consentStatus": "NOT_SET"
+                }
+            }
+        ],
+        "trigger": [
+            {
+                "accountId": "6269093290",
+                "containerId": "206306412",
+                "triggerId": "45",
+                "name": "event - recaptchaVerified",
+                "type": "CUSTOM_EVENT",
+                "customEventFilter": [
+                    {
+                        "type": "EQUALS",
+                        "parameter": [
+                            {
+                                "type": "TEMPLATE",
+                                "key": "arg0",
+                                "value": "{{_event}}"
+                            },
+                            {
+                                "type": "TEMPLATE",
+                                "key": "arg1",
+                                "value": "recaptchaVerified"
+                            }
+                        ]
+                    }
+                ],
+                "fingerprint": "1743498470640"
+            },
+            {
+                "accountId": "6269093290",
+                "containerId": "206306412",
+                "triggerId": "50",
+                "name": "timer 10s",
+                "type": "TIMER",
+                "autoEventFilter": [
+                    {
+                        "type": "CONTAINS",
+                        "parameter": [
+                            {
+                                "type": "TEMPLATE",
+                                "key": "arg0",
+                                "value": "{{Referrer}}"
+                            },
+                            {
+                                "type": "TEMPLATE",
+                                "key": "arg1",
+                                "value": "zurov.ru"
+                            },
+                            {
+                                "type": "BOOLEAN",
+                                "key": "negate",
+                                "value": "true"
+                            }
+                        ]
+                    }
+                ],
+                "eventName": {
+                    "type": "TEMPLATE",
+                    "value": "gtm_timer_10s"
+                },
+                "interval": {
+                    "type": "TEMPLATE",
+                    "value": "10000"
+                },
+                "limit": {
+                    "type": "TEMPLATE",
+                    "value": "1"
+                },
+                "fingerprint": "1743498470641"
+            },
+            {
+                "accountId": "6269093290",
+                "containerId": "206306412",
+                "triggerId": "53",
+                "name": "event - iNeedScore",
+                "type": "CUSTOM_EVENT",
+                "customEventFilter": [
+                    {
+                        "type": "EQUALS",
+                        "parameter": [
+                            {
+                                "type": "TEMPLATE",
+                                "key": "arg0",
+                                "value": "{{_event}}"
+                            },
+                            {
+                                "type": "TEMPLATE",
+                                "key": "arg1",
+                                "value": "iNeedScore"
+                            }
+                        ]
+                    }
+                ],
+                "fingerprint": "1743498470642"
+            }
+        ],
+        "variable": [
+            {
+                "accountId": "6269093290",
+                "containerId": "206306412",
+                "variableId": "18",
+                "name": "recaptchaScore",
+                "type": "v",
+                "parameter": [
+                    {
+                        "type": "INTEGER",
+                        "key": "dataLayerVersion",
+                        "value": "2"
+                    },
+                    {
+                        "type": "BOOLEAN",
+                        "key": "setDefaultValue",
+                        "value": "false"
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "name",
+                        "value": "recaptchaScore"
+                    }
+                ],
+                "fingerprint": "1743499384827",
+                "formatValue": {}
+            },
+            {
+                "accountId": "6269093290",
+                "containerId": "206306412",
+                "variableId": "44",
+                "name": "recaptchaAction",
+                "type": "v",
+                "parameter": [
+                    {
+                        "type": "INTEGER",
+                        "key": "dataLayerVersion",
+                        "value": "2"
+                    },
+                    {
+                        "type": "BOOLEAN",
+                        "key": "setDefaultValue",
+                        "value": "false"
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "name",
+                        "value": "recaptchaAction"
+                    }
+                ],
+                "fingerprint": "1743498470640",
+                "formatValue": {}
+            },
+            {
+                "accountId": "6269093290",
+                "containerId": "206306412",
+                "variableId": "52",
+                "name": "recaptchaSiteKey",
+                "type": "c",
+                "parameter": [
+                    {
+                        "type": "TEMPLATE",
+                        "key": "value",
+                        "value": "6LfokgUrAAAAAOThxyWsgFx2HMgGCyimah7xaQaN"
+                    }
+                ],
+                "fingerprint": "1743522692452",
+                "formatValue": {}
+            },
+            {
+                "accountId": "6269093290",
+                "containerId": "206306412",
+                "variableId": "56",
+                "name": "recaptchaServerPuth",
+                "type": "c",
+                "parameter": [
+                    {
+                        "type": "TEMPLATE",
+                        "key": "value",
+                        "value": "bot_chek.php"
+                    }
+                ],
+                "fingerprint": "1743539213422",
+                "formatValue": {}
+            }
+        ],
+        "fingerprint": "1743539357343",
+        "tagManagerUrl": "https://tagmanager.google.com/#/versions/accounts/6269093290/containers/206306412/versions/4?apiLink=version"
+    }
+}
